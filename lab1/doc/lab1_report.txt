@@ -1,0 +1,14 @@
+#Answers to 3 and 4.
+
+3. Please look into angle.py, located in /tests, to check for the direct translation of the angle of the dot product
+associated with cosine and the improvement on the cosine algorithm.
+
+Using a dot product(cosine) or cross product(sine) to try to calculate angles can get messy at the boundaries of arccsin and arccos. In order to remedy this, I think combining them(dividing sine by cosine) to get tangent of a cross product over a dot product will give a more accruate result than one having to deal with magnitudes of vectors or the "norm"'s because they cancel in the initial divison.
+
+
+4. I'm going to predict that it converges because the single-precision floating point numbers can only go so far even though the series itself goes to infinity. So the program must stop simply because it runs out of numbers to use.
+With the limited 32-bit that single precision floating numbers use, the series will seem to converge because the 
+algorithm has no more numbers to add.
+After changing float to double there should be more 'room' for the algorithm to continue.
+
+
