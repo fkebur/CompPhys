@@ -2,12 +2,13 @@
 
 from cpode import *
 from cpforces import *
+from OneDForce import *
 from pylab import *
 import math
 
 # Prepare the force acting on the test mass (m = 1.0)
 springCoefficient = 1.0
-force = RestoringForce(springCoefficient, 0.0)
+force = OneDForce(springCoefficient, 0.0, 8)
 
 # Initial conditions
 x0 = 0.0
@@ -24,7 +25,7 @@ odeSolvers = (RK4, EulerCromer, EulerSolver)
 # We will display them using different colors.
 # Run "help(colors)" at the prompt to see
 # the inctructions on the use of colors.
-timedeltas = (0.02,  0.01)
+timedeltas = (0.0002,  0.0001)
 plotcolors = ('r',   'g')
 
 # Cycle over the ODE algorithms
