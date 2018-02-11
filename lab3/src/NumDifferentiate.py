@@ -5,7 +5,6 @@ Computational Physics - Lab 3 Part 1
 
 import sys
 import numpy as np
-import matplotlib.pyplot as plt
 
 def fn(x):
 	''' Define function of interest '''
