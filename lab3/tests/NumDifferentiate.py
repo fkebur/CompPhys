@@ -9,11 +9,12 @@ import numpy as np
 
 def fn(x):
 	''' Define function of interest '''
-	return np.exp(x)
-def Der(fn):
+	return np.log(x+1)
+# return np.exp(x)
+def Der(x):
 	''' Exact derivative of the function of interest '''
-	return fn
-
+	return (1/(x+1))
+# return 2*np.cos(2x)
 def FDiff(x, h): 
 	''' Take the first derivative of fn using forawrd difference formula '''
 	return (fn(x+h)-fn(x))/(h)
@@ -55,29 +56,29 @@ Find the median relative error for each of the approximations and plot them on a
 for h in hrange:
 	
 	# Compute each derivative
-	f_ex  = fn(x)
+	f_ex  = Der(x)
 	ffor  = FDiff(x,h)
 	fsym1 = SyDiff(x,h)
 	fsym2 = SyDiffNewH(x,h)
-#	fsec  = SecoDiff(x,h)
+	fsec  = SecoDiff(x,h)
 
 	# Compute each relative error
 	error1 = [abs(1-a/b) for a,b in zip(ffor,f_ex)]
 	error2 = [abs(1-a/b) for a,b in zip(fsym1,f_ex)]
 	error3 = [abs(1-a/b) for a,b in zip(fsym2,f_ex)]
-#	error4 = [abs(1-a/b) for a,b in zip(fsec,f_ex)]
+	error4 = [abs(1-a/b) for a,b in zip(fsec,f_ex)]
 	
 	# Find the median of the above errors
 	med1 = np.median(error1)
 	med2 = np.median(error2)
 	med3 = np.median(error3)
-#	med4 = np.median(error4)
+	med4 = np.median(error4)
 	
 	# Fill median array with y axis values
 	MRE1.append(med1)	
 	MRE2.append(med2)	
 	MRE3.append(med3)	
-#	MRE4.append(med4)
+	MRE4.append(med4)
 
 ax = plt.subplot(111)
 ax.set_xscale("log")
@@ -87,8 +88,8 @@ ax.set_ylabel('Median relative error')
 ax.plot(hrange,MRE1,label="Forward difference first derivative")
 ax.plot(hrange,MRE2,label="Symmetric difference first derivative")
 ax.plot(hrange,MRE3,label="Symmetric(new h) difference first derivative")
-#ax.plot(hrange,MRE4,label="Three point second derivative")
-ax.set_title('Errors for the exponential function')
+ax.plot(hrange,MRE4,label="Three point second derivative")
+ax.set_title('Errors for the ln(x+1)' )
 ax.legend(loc= 'upper right')
 ax.grid(True)
 

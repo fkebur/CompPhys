@@ -1,0 +1,32 @@
+\title{Lab 3}
+\author{
+        Kebur Fantahun \\
+                Department of Physics\\
+        TTU---Texas Tech University\\
+        Lubbock, Texas, \underline{U.S.A.}
+}
+
+\date{\today}
+
+\documentclass[12pt]{article}
+
+\usepackage{pdfpages}
+
+\begin{document}
+
+\maketitle
+
+\section{Part 1. Precision of Numerical Differentiation}
+The slope of the plots inside each region agrees with my expectations. The region of decreasing slope is where the round-off error dominates. The region of increasing slope is where the approximation error dominates. At first the slope did not agree but after correcting the spacing of the range of h the slopes began to look like $\mathcal{O}(h)$ and $\mathcal{O}(h^2)$ respectively. The section~\ref{Plots} depicts the median relative error plots from attempting to take three first derivatives and one second derivative of the functions $exp(x)$, $ln(x+1)$, and $sin(2x)$ .
+
+\section{Plots}\label{plots}
+Please find the plots on page 2. \\
+\includepdfmerge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
+
+\section{Part 2. Optimizing Projectile Firing Angle}
+
+\section{Choices}\label{choices}
+In this section, I will describe the choices for certain parameters and reasons for those choices.
+
+\end{document}
+This is never printed
