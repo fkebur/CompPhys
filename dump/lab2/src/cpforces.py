@@ -122,7 +122,8 @@ class MagnusForce(BasicForce):
 
 class QuadraticDrag(BasicForce):
     "Quadratic drag with constant drag coefficient"
-    def __init__(self, frontalArea, airDensity):
+    def __init__(self, dragCoefficient, frontalArea, airDensity):
+        self.C = dragCoefficient
         self.A = frontalArea
         self.rho = airDensity
     def __call__(self, t, x, v):
@@ -132,21 +133,7 @@ class QuadraticDrag(BasicForce):
         # first and, when v is a vector, it multiplies a scalar
         # by a vector only at the very end (this saves a little
         # bit of CPU time).
-        
-        # vS - speed of sound
-        vS = 340.0
-        
-        # Mach number, speed over speed of sound
-        M = abs(v)/vS
-        
-        # C - dragCoefficient
-        if (M <= 0.9):
-            C = 0.15
-        elif(0.9 < M and M <= 1.0):
-            C = 0.15 + (M-0.9)*3.0
-        elif(M > 1.0):
-            C = 0.45/math.sqrt(M)
-        return -0.5*C*self.A*self.rho*abs(v)*v
+        return -0.5*self.C*self.A*self.rho*abs(v)*v
 
 class GolfBallDrag(BasicForce):
     """
