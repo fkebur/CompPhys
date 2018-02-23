@@ -645,10 +645,10 @@ def integrate(f, N, xmin, xmax):
         sum = values[0] + values[1]
     return unit*sum
 
-def trapezoidInt(f, N, xmin, xmax):
+def trapz(f, N, xmin, xmax):
     """
     This function performs an integral using the trapezoidal rules. Arguments are
-    as the same as the above function, 'integrate'.
+    as the same as the above function, "integrate".
     """
     h = (xmax - xmin)/N
     LineApprox = h*(0.5*f(xmin)+f(xmin + h))
@@ -659,8 +659,8 @@ def trapezoidInt(f, N, xmin, xmax):
 
 def SimpsonsInt(f, N, xmin, xmax):
     """
-    This function performs an integral using the trapezoidal rules. Arguments are
-    as the same as the above function, 'integrate'.
+    This function performs an integral using Simpson's rule. Arguments are
+    the same as the above function's, "trapz" and "integrate".
     """
     h = (xmax - xmin)/N
     ParabApprox = (h/3.0)*N*f(xmin)+f(xmax)
