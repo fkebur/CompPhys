@@ -6,6 +6,8 @@ import sys
 import matplotlib.pyplot as plt
 import gaussLegendreQuadrature as glq
 
+eps = sys.float_info.epsilon
+
 '''
 This section defines functions trapz and simpsons to take integral approximations
 '''
@@ -22,7 +24,7 @@ def trapz(f, N, xmin, xmax):
     xmin, xmax -- Integration interval.
     """
     # Calculate h value
-    h = (xmax - xmin)/(N + sys.float_info.epsilon)
+    h = (xmax - xmin)/(N + eps)
     
     # Computing sum of first and last terms
     # in above formula
@@ -54,7 +56,7 @@ def simpsons(f, N, xmin ,xmax ):
        raise ValueError(" You enetered N=%d, but I require that you give me an even number for N! " % N)
 
     # Calculate h value
-    h = (xmax - xmin)/(N + sys.float_info.epsilon)
+    h = (xmax - xmin)/(N + eps)
     
     # Sum of first and last terms
     tot = f(xmin) + f(xmax)
@@ -137,9 +139,9 @@ for n in range(len(N)):
     AP2 = [simpsons(f0, int(N[n]), x0, xf)]
     
     # Compute each relative error
-    error0 = [abs(1-a/b) for a,b in zip(AP0,EX0)]
-    error1 = [abs(1-a/b) for a,b in zip(AP1,EX1)]
-    error2 = [abs(1-a/b) for a,b in zip(AP2,EX2)]
+    error0 = [abs((a-b)/b) for a,b in zip(AP0,EX0)]
+    error1 = [abs((a-b)/b) for a,b in zip(AP1,EX1)]
+    error2 = [abs((a-b)/b) for a,b in zip(AP2,EX2)]
 
     # Fill relative error array with y axis values
     FN0.append(error0)    
@@ -155,7 +157,7 @@ ax.set_ylabel('Relative error')
 ax.plot(N,FN0,label=methods[0])
 ax.plot(N,FN1,label=methods[1])
 ax.plot(N,FN2,label=methods[2])
-ax.set_title('Integration rule errors for '+ integrands[2])
+ax.set_title('Integration rule errors for '+ integrands[0])
 ax.legend(loc= 'best')
 
 plt.show()
