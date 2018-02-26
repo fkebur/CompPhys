@@ -9,6 +9,7 @@ __date__ ="Feb 12 2018"
 
 import operator
 import functools
+import numpy as np
 
 # Weights and abscissae for Gauss-Legendre quadratures
 # originally calculated in extended precision. Only even
@@ -625,6 +626,14 @@ def integrate(f, N, xmin, xmax):
     N          -- Number of points to use for integration. Call "validNValues()"
                   function to find out which values of N are supported.
     xmin, xmax -- Integration interval.
+    :q
+
+
+
+
+
+
+
     """
     half = N // 2
     if N % 2 or half not in __glx:
@@ -644,27 +653,3 @@ def integrate(f, N, xmin, xmax):
     else:
         sum = values[0] + values[1]
     return unit*sum
-
-def trapz(f, N, xmin, xmax):
-    """
-    This function performs an integral using the trapezoidal rules. Arguments are
-    as the same as the above function, "integrate".
-    """
-    h = (xmax - xmin)/N
-    LineApprox = h*(0.5*f(xmin)+f(xmin + h))
-    xvals = np.arange(xmin,xmax+h,h)
-    yvals = f(xvals)
-    val = h*(0.5*(xvals[-1]+xvals[0]) + xvals[1:])
-    return val
-
-def SimpsonsInt(f, N, xmin, xmax):
-    """
-    This function performs an integral using Simpson's rule. Arguments are
-    the same as the above function's, "trapz" and "integrate".
-    """
-    h = (xmax - xmin)/N
-    ParabApprox = (h/3.0)*N*f(xmin)+f(xmax)
-    xvals = np.arange(xmin,xmax+h,h)
-    yvals = f(xvals)
-    val = (h/3.0)*(0.5*(xvals[-1]+xvals[0]) + xvals[1:])
-     
