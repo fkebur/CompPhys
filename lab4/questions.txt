@@ -1,4 +1,0 @@
-1. trapezoids works for e and ln but for sin2x it works extremely well. Why?
-Bonus points
-
-2. 
