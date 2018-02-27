@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 FEB 2018 09:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  27 FEB 2018 13:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -112,7 +112,7 @@ File: pppdftex.def 2017/01/14 v0.5h Pdfpages driver for pdfTeX (AM)
 \c@AM@survey=\count91
 \AM@templatesizebox=\box27
 )
-No file lab4_report.aux.
+(./lab4_report.aux)
 \openout1 = `lab4_report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
@@ -128,6 +128,7 @@ LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 \AtBeginShipoutBox=\box28
+
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count92
@@ -203,56 +204,34 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 17.
 
+<exp.pdf, id=1, 425.28072pt x 328.53627pt>
+File: exp.pdf Graphic file (type pdf)
+ <use exp.pdf>
+Package pdftex.def Info: exp.pdf used on input line 23.
+(pdftex.def)             Requested size: 425.27968pt x 328.53546pt.
 
-! Package pdfpages Error: Cannot find file `fig1.pdf'.
+<log.pdf, id=3, 425.28072pt x 328.53627pt>
+File: log.pdf Graphic file (type pdf)
+ <use log.pdf>
+Package pdftex.def Info: log.pdf used on input line 23.
+(pdftex.def)             Requested size: 425.27968pt x 328.53546pt.
 
-See the pdfpages package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
+<sin.pdf, id=5, 880.63594pt x 498.26237pt>
+File: sin.pdf Graphic file (type pdf)
+ <use sin.pdf>
+Package pdftex.def Info: sin.pdf used on input line 23.
+(pdftex.def)             Requested size: 880.6338pt x 498.26115pt.
 
-! Package pdfpages Error: Cannot find file `fig2.pdf'.
+<exp.pdf, id=7, page=1, 425.28072pt x 328.53627pt>
+File: exp.pdf Graphic file (type pdf)
+ <use exp.pdf, page 1>
+Package pdftex.def Info: exp.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 425.27968pt x 328.53546pt.
+File: exp.pdf Graphic file (type pdf)
 
-See the pdfpages package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdfpages Error: Cannot find file `fig3.pdf'.
-
-See the pdfpages package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
+<use exp.pdf, page 1>
+Package pdftex.def Info: exp.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 22--23
 
@@ -261,137 +240,83 @@ Underfull \hbox (badness 10000) in paragraph at lines 22--23
 [1
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+File: exp.pdf Graphic file (type pdf)
 
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
+<use exp.pdf, page 1>
+Package pdftex.def Info: exp.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
+File: exp.pdf Graphic file (type pdf)
+ <use exp.pdf, page 1>
+Package pdftex.def Info: exp.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
+<log.pdf, id=16, page=1, 425.28072pt x 328.53627pt>
+File: log.pdf Graphic file (type pdf)
+ <use log.pdf, page 1>
+Package pdftex.def Info: log.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
+File: log.pdf Graphic file (type pdf)
 
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
+<use log.pdf, page 1>
+Package pdftex.def Info: log.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
+ <sin.pdf, id=17, page=1, 880.63594pt x 498.26237pt>
+File: sin.pdf Graphic file (type pdf)
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
+<use sin.pdf, page 1>
+Package pdftex.def Info: sin.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 636.4224pt x 360.08673pt.
+File: sin.pdf Graphic file (type pdf)
+ <use sin.pdf, page 1>
+Package pdftex.def Info: sin.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 636.4224pt x 360.08673pt.
+File: exp.pdf Graphic file (type pdf)
+ <use exp.pdf, page 1>
+Package pdftex.def Info: exp.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
+File: exp.pdf Graphic file (type pdf)
 
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
+<use exp.pdf, page 1>
+Package pdftex.def Info: exp.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
+File: exp.pdf Graphic file (type pdf)
+ <use exp.pdf, page 1>
+Package pdftex.def Info: exp.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
+File: log.pdf Graphic file (type pdf)
+ <use log.pdf, page 1>
+Package pdftex.def Info: log.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 307.344pt x 237.42822pt.
+File: sin.pdf Graphic file (type pdf)
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
+<use sin.pdf, page 1>
+Package pdftex.def Info: sin.pdf, page1 used on input line 23.
+(pdftex.def)             Requested size: 636.4224pt x 360.08673pt.
+ [2 <./exp.pdf> <./log.pdf
 
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
+pdfTeX warning: pdflatex (file ./log.pdf): PDF inclusion: multiple pdfs with pa
+ge group included in a single page
+> <./sin.pdf
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-
-! Package pdftex.def Error: File `\AM@currentdocname .png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 ...ge[nup=2x2]{fig1.pdf,  fig2.pdf, fig3.pdf}
-                                                  
-? 
-[2] [3] (./lab4_report.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+pdfTeX warning: pdflatex (file ./sin.pdf): PDF inclusion: multiple pdfs with pa
+ge group included in a single page
+>] [3] (./lab4_report.aux) ) 
 Here is how much of TeX's memory you used:
- 2795 strings out of 492995
- 40528 string characters out of 6132704
- 106838 words of memory out of 5000000
- 6321 multiletter control sequences out of 15000+600000
- 5925 words of font info for 22 fonts, out of 8000000 for 9000
+ 2813 strings out of 492995
+ 40824 string characters out of 6132704
+ 106854 words of memory out of 5000000
+ 6341 multiletter control sequences out of 15000+600000
+ 5756 words of font info for 21 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,17n,42p,242b,410s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on lab4_report.pdf (3 pages, 39504 bytes).
+ 39i,18n,43p,648b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2017/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr17.pfb>
+Output written on lab4_report.pdf (3 pages, 72075 bytes).
 PDF statistics:
- 30 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 162 PDF objects out of 1000 (max. 8388607)
+ 33 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 

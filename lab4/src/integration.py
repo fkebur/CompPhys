@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import numpy as np
 import math
 import sys
 import matplotlib.pyplot as plt
@@ -33,7 +32,7 @@ def trapz(f, N, xmin, xmax):
     # Sum up the remaining terms
     i = 1
     
-    while i < n:
+    while i < N:
         tot += 2 * f(xmin + i * h)
         i += 1
     
@@ -77,16 +76,18 @@ This section initializes functions, lists and produces the result of the integra
 # functions
 
 def f0(x):
-    return np.exp(x)
+    return math.exp(x)
 def f1(x):
-    return np.log(x+1)
+    return math.log(x+1)
 def f2(x):
-    return np.sin(2*x)**2
+    return math.sin(2*x)**2
 
 # lists of functions to look through
 functions = [f0,f1,f2]
-methods = ('Gauss Legendre Quadrature', 'Trapezoidal rule', 'Simpsons rule')
 integrands = ['exp(x)', 'ln(x+1)' ,'sin(2*x)**2']
+methods = ('Gauss Legendre Quadrature', 'Trapezoidal rule', 'Simpsons rule')
+
+
 
 '''
 A check to see if it works...
@@ -110,11 +111,10 @@ for f in problems:
 '''
 This section will plot the relative error of each integration method used in the previous section.
 '''
-# x axis, M values for glq and N values for the rest
-#N = np.logspace(-14,-1)
+# x axis, number of intervals 
 N = glq.validNValues()
 
-# y axis, relative error as a function of N -- built inside for loop
+# y axis, relative error as a function of N -- built inside the for loop
 
 # initialize error arrays
 FN0=[]
@@ -122,33 +122,40 @@ FN1=[]
 FN2=[]
 
 # exact values for each integrand
-EX0=[np.exp(2*np.pi)-np.exp(0)]
-EX1=[(2*np.pi + 1)*np.log(2*np.pi + 1) - (2*np.pi)]
-EX2=[np.pi]
+EX0=[math.exp(2*math.pi)-math.exp(0)]
+EX1=[(2*math.pi + 1)*math.log(2*math.pi + 1) - (2*math.pi)]
+EX2=[math.pi]
 
 # range of interval which integral is taken over
 x0= 0
-xf= 2*np.pi
+xf= 2*math.pi
 
 # find trapz and simpsons error and give it to coloumns of FN
 for n in range(len(N)):
     
     # integral approximations
-    AP0 = [glq.integrate(f0, N[n], x0, xf)]
-    AP1 = [trapz(f0, int(N[n]), x0, xf)]
-    AP2 = [simpsons(f0, int(N[n]), x0, xf)]
+    AP0 = [glq.integrate(f2, N[n], x0, xf)]
+    AP1 = [trapz(f2, N[n], x0, xf)]
+    AP2 = [simpsons(f2, N[n], x0, xf)]
     
     # Compute each relative error
-    error0 = [abs((a-b)/b) for a,b in zip(AP0,EX0)]
-    error1 = [abs((a-b)/b) for a,b in zip(AP1,EX1)]
+    error0 = [abs((a-b)/b) for a,b in zip(AP0,EX2)]
+    error1 = [abs((a-b)/b) for a,b in zip(AP1,EX2)]
     error2 = [abs((a-b)/b) for a,b in zip(AP2,EX2)]
-
+    
+    if error0[0]  == 0.0:
+                error0[0] = 1e-16/EX2[0]
+    if error1[0]  == 0.0:
+                error1[0] = 1e-16/EX2[0]
+    if error2[0]  == 0.0:
+                error2[0] = 1e-16/EX2[0]
+    
     # Fill relative error array with y axis values
     FN0.append(error0)    
     FN1.append(error1)
     FN2.append(error2)
     
-
+f = plt.figure()
 ax = plt.subplot(111)
 ax.set_xscale("log")
 ax.set_yscale("log")
@@ -157,8 +164,9 @@ ax.set_ylabel('Relative error')
 ax.plot(N,FN0,label=methods[0])
 ax.plot(N,FN1,label=methods[1])
 ax.plot(N,FN2,label=methods[2])
-ax.set_title('Integration rule errors for '+ integrands[0])
+ax.set_title('Integration rule errors for '+ integrands[2])
 ax.legend(loc= 'best')
-
+ax.grid(True)
 plt.show()
+f.savefig("sin.pdf", bbox_inches='tight')
 
