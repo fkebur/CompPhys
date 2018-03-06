@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "./bifurcDiagram.py", line 8, in <module>
-    import pandas as pd
-ImportError: No module named pandas

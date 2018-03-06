@@ -46,7 +46,7 @@ plt.rc('xtick', labelsize=SMALL_SIZE)
 plt.rc('ytick', labelsize=SMALL_SIZE)    
 plt.rc('figure', titlesize=BIGGER_SIZE)
 
-plt.plot(X,Y,'c')
+plt.plot(X,Y,'g,')
 plt.title("Bifurcation")
 plt.xlabel("F_D")
 plt.ylabel("Angles")
