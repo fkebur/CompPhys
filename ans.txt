@@ -1,0 +1,5 @@
+interface between python and cc
+
+then solve BVP with SOR or other
+
+interest in multigrid
