@@ -10,7 +10,7 @@ def AngleValue(theta0, F_D):
     omega0 = 1.0
     dissipationCoefficient = 0.5
     omegaD = 2.0/3.0
-    Dperiod = 2*np.pi/omegaD
+    periodD = 2*np.pi/omegaD
 
     # Prepare the force model
     force = DrivenPendulum(omega0, dissipationCoefficient, F_D, omegaD)
@@ -34,7 +34,7 @@ def AngleValue(theta0, F_D):
     periodRange = np.arange(200*periodD,400*periodD,periodD)
     angle = []
 
-    for t in period_times:
+    for t in periodRange:
         x, v = pendulum.interpolate(t)
         angle.append(standard_angle(x))
 
