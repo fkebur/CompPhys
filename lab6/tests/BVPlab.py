@@ -33,19 +33,8 @@ fig.colorbar(mshow, aspect=10)
 #######################################################
 
 # Plot iteration for convergence vs w
-omega = [1,1.2,1.4,1.6,1.8,1.9,2]
-
+omega = np.linspace(1.0,2.0)
 ax1 = fig.add_subplot(212)
-
-
-for i in omega:
-	for j in range(100):
-		checknum = g.SOR(j,i)
-		if checknum == -5.24598181061:
-			ax1.plot(j,i,'.-')
-		else:
-			continue
-
 
 ax1.set_xlabel('$\omega$')
 ax1.set_ylabel('Number of iterations')
