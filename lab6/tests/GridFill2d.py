@@ -275,8 +275,8 @@ class GridFill2d:
         ny = self.ny
         V = self.data
 
-        yc1, xis1 = self.findXVal(10, 20, 11)
-        yc2, xis2 = self.findXVal(10, 20, 19)
+        yc1, xis1 = self.findXVal(10, 20, 12)
+        yc2, xis2 = self.findXVal(10, 20, 18)
         yc = [yc1, yc2]
 
         for i in range(niter):
@@ -292,8 +292,8 @@ class GridFill2d:
         ny = self.ny
         V = self.data
 
-        yc1, xis1 = self.findXVal(10, 20, 11)
-        yc2, xis2 = self.findXVal(10, 20, 19)
+        yc1, xis1 = self.findXVal(10, 20, 12)
+        yc2, xis2 = self.findXVal(10, 20, 18)
         yc = [yc1, yc2]
 
         for i in range(niter):
@@ -303,4 +303,5 @@ class GridFill2d:
                         continue
                     GaussSD = 0.25*(V[y+1][x]+V[y-1][x]+V[y][x+1]+V[y][x-1])
                     V[y][x] = V[y][x] + w*(GaussSD-V[y][x])
-        return True
+		    
+        return V[50][50]
