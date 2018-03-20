@@ -3,6 +3,8 @@
 #include <math.h>
 #include <cstdlib> 
 #include <iomanip>
+using namespace std;
+
 // for rand() on archer. 
 // for setw() in cout, using namespace std;
 
@@ -32,18 +34,14 @@ int main()
         } //endofxloop
     } // end of iter loop
     
+    ofstream outfile;
+    outfile.open("potential.txt");
+    for(int x=0; x<nmax; x++){
+    for(int y=0; y<nmax; y++){
+        outfile<<" "<<x<<" "<<y<<" "<<V[x][y]<<endl; }
+    }
+    
+    outfile.close();
+    return 0;
 }
 
-std::ofstream << outfile;
-
-
-outfile.open("potential.txt");
-
-for(int x=0; x<nmax; x++){
-for(int y=0; y<nmax; y++){
-    outfile<<" "<<x<<" "<<y<<" "<<V[x][y]<<endl; }
-}
-
-outfile.close();
-return 0;
-}
