@@ -1,0 +1,14 @@
+Do/answer:
+
+- solve BVP for 19.6 with both Jacobi/SOR
+
+- set the convergence target so that the expected alg error is comparable with discretization error -- Basically answer the question: Has the iteration converged? if so, when? why/how
+
+- explore SOR convergence -- Plot number of iterations needed vs omega for omega->(1.0-2.0)
+answer this: Is the num recipes omega the optimal one? based on the plot.
+"       "  : What is the speed-up of the SOR algorithm compared to Jacobi in terms of the number of iterations needed for convergence?
+
+So for line 7 basically make a plot(x - omega,y - number of iters), observe if the convergence omega is good. then see when SOR starts to do better than Jacobi
+
+Final plot should be in python. Python will read an array to plot.
+I've learned that the difference between Jacobi and SOR methods is basically the timing of using the newly computed values. In Gauss-Seidel, rather than computing new values entirely from the previous values, one could use a new value calculated differently

@@ -1,0 +1,5 @@
+Are these plots qualitatively similar or different?
+They are qualitatively different.
+Looking at the ratio between branchings, I can see the Feigenbaum constant come out.
+
+I did not time my program correctly so it did not fill all the way but the script should be able to fill out Part 2's bifurcation, given enough time. 
