@@ -3,4 +3,7 @@ Explain what you see using von Neumann results:
 When we change the dt_factor value in "LaxAdvectionSolver1d_example.py" from 1 to 1.01 and 0.8, the results we see are caused by changes in the amplification factor. When increased to 1.01 the amplification factor itself will be greater than one and will amplify by definition. Although when decreased to 0.8, the time step results in a deamplification since the amplification will end up lower than one.
 
 Explain why the waves do no reflect from the boundaries:
-The waves do not reflect because the right side seems to always be the open ended one unless it is periodic.
+They do not reflect at the boundary for the fully free or fixed cases because the solver is told only to keep solving for a positive(forward moving wave) case. If we want the wave to reflect there must be some condition for the wave to become negatively directed after the whole wave has reached a certain x value.
+
+What values of Delta t give rise to instability:
+The solution becomes unstable at values of Delta t > or < 1 and is only stable at 1. 

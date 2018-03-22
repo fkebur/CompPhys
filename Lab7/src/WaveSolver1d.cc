@@ -42,7 +42,11 @@ void WaveSolver1d::propagate(double* next, const double** y)
         // Assume that the string is fixed at the edges.
         next[0] = y[0][0];
         for (unsigned j=1; j<lengthMinusOne; ++j)
-            next[j] = rhoSq*(y[1][j+1]-2*y[1][j]+y[1][j-1]) + 2*y[1][j] - y[0][j];
+            
+	// Leapfrog scheme - next[j] = rhoSq*(y[1][j+1]-2*y[1][j]+y[1][j-1]) + 2*y[1][j] - y[0][j];	  
+	
+	// Lax - Wendroff Scheme
+	next[j] = y[1][j] - rho*0.5*(y[1][j+1] - y[1][j-1]) + 0.5*rhoSq*(y[1][j+1] + y[1][j-1] - 2*y[1][j]);
         next[lengthMinusOne] = y[lengthMinusOne][lengthMinusOne];
     }
     break;
@@ -53,7 +57,10 @@ void WaveSolver1d::propagate(double* next, const double** y)
         const unsigned length = sizes_[0];
         for (unsigned j=0; j<length; ++j)
         {
-	    next[j] = rhoSq*(y[1][j+1]-2*y[1][j]+y[1][j-1]) + 2*y[1][j] - y[0][j];
+	// Leapfrog scheme - next[j] = rhoSq*(y[1][j+1]-2*y[1][j]+y[1][j-1]) + 2*y[1][j] - y[0][j];
+	
+	// Lax - Wendroff Scheme
+	next[j] = y[1][j] - rho*0.5*(y[1][j+1] - y[1][j-1]) + 0.5*rhoSq*(y[1][j+1] + y[1][j-1] - 2*y[1][j]);
         }
     }
     break;
@@ -62,7 +69,10 @@ void WaveSolver1d::propagate(double* next, const double** y)
     {
         // Assume a string with free ends
         for (unsigned j=1; j<lengthMinusOne; ++j)
-            next[j] = rhoSq*(y[1][j+1]-2*y[1][j]+y[1][j-1]) + 2*y[1][j] - y[0][j];
+        // Leapfrog scheme - next[j] = rhoSq*(y[1][j+1]-2*y[1][j]+y[1][j-1]) + 2*y[1][j] - y[0][j];
+	
+	// Lax - Wendroff Scheme
+	next[j] = y[1][j] - rho*0.5*(y[1][j+1] - y[1][j-1]) + 0.5*rhoSq*(y[1][j+1] + y[1][j-1] - 2*y[1][j]);
         next[0] = next[1];
         next[lengthMinusOne] = next[lengthMinusOne-1];
     }
