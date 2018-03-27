@@ -2952,15 +2952,11 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_CPInitialValueSolver swig_types[0]
-#define SWIGTYPE_p_LWendroff swig_types[1]
-#define SWIGTYPE_p_LaxAdvectionSolver1d swig_types[2]
-#define SWIGTYPE_p_Leapfrog swig_types[3]
-#define SWIGTYPE_p_WaveSolver1d swig_types[4]
-#define SWIGTYPE_p_WaveSolver2d swig_types[5]
-#define SWIGTYPE_p_char swig_types[6]
-static swig_type_info *swig_types[8];
-static swig_module_info swig_module = {swig_types, 7, 0, 0, 0, 0};
+#define SWIGTYPE_p_CPP11Random swig_types[0]
+#define SWIGTYPE_p_SiteSampler swig_types[1]
+#define SWIGTYPE_p_char swig_types[2]
+static swig_type_info *swig_types[4];
+static swig_module_info swig_module = {swig_types, 3, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2973,16 +2969,16 @@ static swig_module_info swig_module = {swig_types, 7, 0, 0, 0, 0};
 #endif
 
 /*-----------------------------------------------
-              @(target):= _CPInitialValue.so
+              @(target):= _dla.so
   ------------------------------------------------*/
 #if PY_VERSION_HEX >= 0x03000000
-#  define SWIG_init    PyInit__CPInitialValue
+#  define SWIG_init    PyInit__dla
 
 #else
-#  define SWIG_init    init_CPInitialValue
+#  define SWIG_init    init_dla
 
 #endif
-#define SWIG_name    "_CPInitialValue"
+#define SWIG_name    "_dla"
 
 #define SWIGVERSION 0x020010 
 #define SWIG_VERSION SWIGVERSION
@@ -3058,8 +3054,7 @@ namespace swig {
 
 
 #define SWIG_FILE_WITH_INIT
-#define PY_ARRAY_UNIQUE_SYMBOL initialvalue_ARRAY_API
-#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+#define PY_ARRAY_UNIQUE_SYMBOL dla_ARRAY_API
 
 
 #ifndef SWIG_FILE_WITH_INIT
@@ -3073,239 +3068,8 @@ namespace swig {
 #include <complex> 
 
 
-#include "CPInitialValueSolver.hh"
-#include "LaxAdvectionSolver1d.hh"
-#include "WaveSolver2d.hh"
-#include "WaveSolver1d.hh"
-#include "LWendroff.hh"
-#include "Leapfrog.hh"
-
-
-#include <limits.h>
-#if !defined(SWIG_NO_LLONG_MAX)
-# if !defined(LLONG_MAX) && defined(__GNUC__) && defined (__LONG_LONG_MAX__)
-#   define LLONG_MAX __LONG_LONG_MAX__
-#   define LLONG_MIN (-LLONG_MAX - 1LL)
-#   define ULLONG_MAX (LLONG_MAX * 2ULL + 1ULL)
-# endif
-#endif
-
-
-SWIGINTERN int
-SWIG_AsVal_double (PyObject *obj, double *val)
-{
-  int res = SWIG_TypeError;
-  if (PyFloat_Check(obj)) {
-    if (val) *val = PyFloat_AsDouble(obj);
-    return SWIG_OK;
-  } else if (PyInt_Check(obj)) {
-    if (val) *val = PyInt_AsLong(obj);
-    return SWIG_OK;
-  } else if (PyLong_Check(obj)) {
-    double v = PyLong_AsDouble(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_OK;
-    } else {
-      PyErr_Clear();
-    }
-  }
-#ifdef SWIG_PYTHON_CAST_MODE
-  {
-    int dispatch = 0;
-    double d = PyFloat_AsDouble(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = d;
-      return SWIG_AddCast(SWIG_OK);
-    } else {
-      PyErr_Clear();
-    }
-    if (!dispatch) {
-      long v = PyLong_AsLong(obj);
-      if (!PyErr_Occurred()) {
-	if (val) *val = v;
-	return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
-      } else {
-	PyErr_Clear();
-      }
-    }
-  }
-#endif
-  return res;
-}
-
-
-#include <float.h>
-
-
-#include <math.h>
-
-
-SWIGINTERNINLINE int
-SWIG_CanCastAsInteger(double *d, double min, double max) {
-  double x = *d;
-  if ((min <= x && x <= max)) {
-   double fx = floor(x);
-   double cx = ceil(x);
-   double rd =  ((x - fx) < 0.5) ? fx : cx; /* simple rint */
-   if ((errno == EDOM) || (errno == ERANGE)) {
-     errno = 0;
-   } else {
-     double summ, reps, diff;
-     if (rd < x) {
-       diff = x - rd;
-     } else if (rd > x) {
-       diff = rd - x;
-     } else {
-       return 1;
-     }
-     summ = rd + x;
-     reps = diff/summ;
-     if (reps < 8*DBL_EPSILON) {
-       *d = rd;
-       return 1;
-     }
-   }
-  }
-  return 0;
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val) 
-{
-#if PY_VERSION_HEX < 0x03000000
-  if (PyInt_Check(obj)) {
-    long v = PyInt_AsLong(obj);
-    if (v >= 0) {
-      if (val) *val = v;
-      return SWIG_OK;
-    } else {
-      return SWIG_OverflowError;
-    }
-  } else
-#endif
-  if (PyLong_Check(obj)) {
-    unsigned long v = PyLong_AsUnsignedLong(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_OK;
-    } else {
-      PyErr_Clear();
-#if PY_VERSION_HEX >= 0x03000000
-      {
-        long v = PyLong_AsLong(obj);
-        if (!PyErr_Occurred()) {
-          if (v < 0) {
-            return SWIG_OverflowError;
-          }
-        } else {
-          PyErr_Clear();
-        }
-      }
-#endif
-    }
-  }
-#ifdef SWIG_PYTHON_CAST_MODE
-  {
-    int dispatch = 0;
-    unsigned long v = PyLong_AsUnsignedLong(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_AddCast(SWIG_OK);
-    } else {
-      PyErr_Clear();
-    }
-    if (!dispatch) {
-      double d;
-      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
-      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, ULONG_MAX)) {
-	if (val) *val = (unsigned long)(d);
-	return res;
-      }
-    }
-  }
-#endif
-  return SWIG_TypeError;
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
-{
-  unsigned long v;
-  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v > UINT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< unsigned int >(v);
-    }
-  }  
-  return res;
-}
-
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_unsigned_SS_int  (unsigned int value)
-{
-  return PyInt_FromSize_t((size_t) value);
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_long (PyObject *obj, long* val)
-{
-  if (PyInt_Check(obj)) {
-    if (val) *val = PyInt_AsLong(obj);
-    return SWIG_OK;
-  } else if (PyLong_Check(obj)) {
-    long v = PyLong_AsLong(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_OK;
-    } else {
-      PyErr_Clear();
-    }
-  }
-#ifdef SWIG_PYTHON_CAST_MODE
-  {
-    int dispatch = 0;
-    long v = PyInt_AsLong(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_AddCast(SWIG_OK);
-    } else {
-      PyErr_Clear();
-    }
-    if (!dispatch) {
-      double d;
-      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
-      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, LONG_MIN, LONG_MAX)) {
-	if (val) *val = (long)(d);
-	return res;
-      }
-    }
-  }
-#endif
-  return SWIG_TypeError;
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_int (PyObject * obj, int *val)
-{
-  long v;
-  int res = SWIG_AsVal_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v < INT_MIN || v > INT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< int >(v);
-    }
-  }  
-  return res;
-}
+#include "SiteSampler.hh"
+#include "CPP11Random.hh"
 
 
 #if NPY_API_VERSION < 0x00000007
@@ -3775,229 +3539,258 @@ SWIG_AsVal_int (PyObject * obj, int *val)
 
 
 
-#ifdef __cplusplus
-extern "C" {
+
+SWIGINTERN int
+SWIG_AsVal_double (PyObject *obj, double *val)
+{
+  int res = SWIG_TypeError;
+  if (PyFloat_Check(obj)) {
+    if (val) *val = PyFloat_AsDouble(obj);
+    return SWIG_OK;
+  } else if (PyInt_Check(obj)) {
+    if (val) *val = PyInt_AsLong(obj);
+    return SWIG_OK;
+  } else if (PyLong_Check(obj)) {
+    double v = PyLong_AsDouble(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    double d = PyFloat_AsDouble(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = d;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      long v = PyLong_AsLong(obj);
+      if (!PyErr_Occurred()) {
+	if (val) *val = v;
+	return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
+      } else {
+	PyErr_Clear();
+      }
+    }
+  }
 #endif
-SWIGINTERN PyObject *_wrap_delete_CPInitialValueSolver(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  CPInitialValueSolver *arg1 = (CPInitialValueSolver *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_CPInitialValueSolver",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CPInitialValueSolver, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CPInitialValueSolver" "', argument " "1"" of type '" "CPInitialValueSolver *""'"); 
-  }
-  arg1 = reinterpret_cast< CPInitialValueSolver * >(argp1);
-  {
-    try {
-      delete arg1;
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
+  return res;
 }
 
 
-SWIGINTERN PyObject *_wrap_CPInitialValueSolver_setInitialValues__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  CPInitialValueSolver *arg1 = (CPInitialValueSolver *) 0 ;
-  PyObject *arg2 = (PyObject *) 0 ;
-  unsigned int arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  unsigned int val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:CPInitialValueSolver_setInitialValues",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CPInitialValueSolver, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CPInitialValueSolver_setInitialValues" "', argument " "1"" of type '" "CPInitialValueSolver *""'"); 
-  }
-  arg1 = reinterpret_cast< CPInitialValueSolver * >(argp1);
-  arg2 = obj1;
-  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "CPInitialValueSolver_setInitialValues" "', argument " "3"" of type '" "unsigned int""'");
-  } 
-  arg3 = static_cast< unsigned int >(val3);
-  {
-    try {
-      result = (PyObject *)(arg1)->setInitialValues(arg2,arg3);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = result;
-  return resultobj;
-fail:
-  return NULL;
+SWIGINTERNINLINE PyObject*
+  SWIG_From_unsigned_SS_int  (unsigned int value)
+{
+  return PyInt_FromSize_t((size_t) value);
 }
 
 
-SWIGINTERN PyObject *_wrap_CPInitialValueSolver_setInitialValues__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  CPInitialValueSolver *arg1 = (CPInitialValueSolver *) 0 ;
-  PyObject *arg2 = (PyObject *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:CPInitialValueSolver_setInitialValues",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CPInitialValueSolver, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CPInitialValueSolver_setInitialValues" "', argument " "1"" of type '" "CPInitialValueSolver *""'"); 
-  }
-  arg1 = reinterpret_cast< CPInitialValueSolver * >(argp1);
-  arg2 = obj1;
-  {
-    try {
-      result = (PyObject *)(arg1)->setInitialValues(arg2);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = result;
-  return resultobj;
-fail:
-  return NULL;
-}
+#include <limits.h>
+#if !defined(SWIG_NO_LLONG_MAX)
+# if !defined(LLONG_MAX) && defined(__GNUC__) && defined (__LONG_LONG_MAX__)
+#   define LLONG_MAX __LONG_LONG_MAX__
+#   define LLONG_MIN (-LLONG_MAX - 1LL)
+#   define ULLONG_MAX (LLONG_MAX * 2ULL + 1ULL)
+# endif
+#endif
 
 
-SWIGINTERN PyObject *_wrap_CPInitialValueSolver_setInitialValues(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[4];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? (int)PyObject_Length(args) : 0;
-  for (ii = 0; (ii < 3) && (ii < argc); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
+#include <float.h>
+
+
+#include <math.h>
+
+
+SWIGINTERNINLINE int
+SWIG_CanCastAsInteger(double *d, double min, double max) {
+  double x = *d;
+  if ((min <= x && x <= max)) {
+   double fx = floor(x);
+   double cx = ceil(x);
+   double rd =  ((x - fx) < 0.5) ? fx : cx; /* simple rint */
+   if ((errno == EDOM) || (errno == ERANGE)) {
+     errno = 0;
+   } else {
+     double summ, reps, diff;
+     if (rd < x) {
+       diff = x - rd;
+     } else if (rd > x) {
+       diff = rd - x;
+     } else {
+       return 1;
+     }
+     summ = rd + x;
+     reps = diff/summ;
+     if (reps < 8*DBL_EPSILON) {
+       *d = rd;
+       return 1;
+     }
+   }
   }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CPInitialValueSolver, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      _v = (argv[1] != 0);
-      if (_v) {
-        return _wrap_CPInitialValueSolver_setInitialValues__SWIG_1(self, args);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CPInitialValueSolver, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      _v = (argv[1] != 0);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_CPInitialValueSolver_setInitialValues__SWIG_0(self, args);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'CPInitialValueSolver_setInitialValues'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    CPInitialValueSolver::setInitialValues(PyObject *,unsigned int)\n"
-    "    CPInitialValueSolver::setInitialValues(PyObject *)\n");
   return 0;
 }
 
 
-SWIGINTERN PyObject *_wrap_CPInitialValueSolver_convert(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  CPInitialValueSolver *arg1 = (CPInitialValueSolver *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:CPInitialValueSolver_convert",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CPInitialValueSolver, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CPInitialValueSolver_convert" "', argument " "1"" of type '" "CPInitialValueSolver const *""'"); 
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val) 
+{
+#if PY_VERSION_HEX < 0x03000000
+  if (PyInt_Check(obj)) {
+    long v = PyInt_AsLong(obj);
+    if (v >= 0) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      return SWIG_OverflowError;
+    }
+  } else
+#endif
+  if (PyLong_Check(obj)) {
+    unsigned long v = PyLong_AsUnsignedLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+#if PY_VERSION_HEX >= 0x03000000
+      {
+        long v = PyLong_AsLong(obj);
+        if (!PyErr_Occurred()) {
+          if (v < 0) {
+            return SWIG_OverflowError;
+          }
+        } else {
+          PyErr_Clear();
+        }
+      }
+#endif
+    }
   }
-  arg1 = reinterpret_cast< CPInitialValueSolver * >(argp1);
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    unsigned long v = PyLong_AsUnsignedLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      double d;
+      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
+      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, ULONG_MAX)) {
+	if (val) *val = (unsigned long)(d);
+	return res;
+      }
+    }
+  }
+#endif
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
+{
+  unsigned long v;
+  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v > UINT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< unsigned int >(v);
+    }
+  }  
+  return res;
+}
+
+
+  #define SWIG_From_double   PyFloat_FromDouble 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+SWIGINTERN PyObject *_wrap_new_SiteSampler(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double *arg1 = (double *) 0 ;
+  unsigned int arg2 ;
+  PyArrayObject *array1 = NULL ;
+  int is_new_object1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SiteSampler *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_SiteSampler",&obj0)) SWIG_fail;
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array1 = obj_to_array_contiguous_allow_conversion(obj0,
+      NPY_DOUBLE,
+      &is_new_object1);
+    if (!array1 || !require_dimensions(array1, 1) ||
+      !require_size(array1, size, 1)) SWIG_fail;
+    arg1 = (double*) array_data(array1);
+    arg2 = (unsigned) array_size(array1,0);
+  }
   {
     try {
-      result = (PyObject *)((CPInitialValueSolver const *)arg1)->convert();
+      result = (SiteSampler *)new SiteSampler((double const *)arg1,arg2);
     } catch (const std::exception& e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
   }
-  resultobj = result;
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CPInitialValueSolver_step(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  CPInitialValueSolver *arg1 = (CPInitialValueSolver *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:CPInitialValueSolver_step",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CPInitialValueSolver, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CPInitialValueSolver_step" "', argument " "1"" of type '" "CPInitialValueSolver *""'"); 
-  }
-  arg1 = reinterpret_cast< CPInitialValueSolver * >(argp1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SiteSampler, SWIG_POINTER_NEW |  0 );
   {
-    try {
-      (arg1)->step();
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
+    if (is_new_object1 && array1)
+    {
+      Py_DECREF(array1); 
     }
   }
-  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
+  {
+    if (is_new_object1 && array1)
+    {
+      Py_DECREF(array1); 
+    }
+  }
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_CPInitialValueSolver_resultTime(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_SiteSampler_sample(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  CPInitialValueSolver *arg1 = (CPInitialValueSolver *) 0 ;
+  SiteSampler *arg1 = (SiteSampler *) 0 ;
+  double arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
   unsigned int result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:CPInitialValueSolver_resultTime",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CPInitialValueSolver, 0 |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"OO:SiteSampler_sample",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_SiteSampler, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CPInitialValueSolver_resultTime" "', argument " "1"" of type '" "CPInitialValueSolver const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SiteSampler_sample" "', argument " "1"" of type '" "SiteSampler const *""'"); 
   }
-  arg1 = reinterpret_cast< CPInitialValueSolver * >(argp1);
+  arg1 = reinterpret_cast< SiteSampler * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SiteSampler_sample" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
   {
     try {
-      result = (unsigned int)((CPInitialValueSolver const *)arg1)->resultTime();
+      result = (unsigned int)((SiteSampler const *)arg1)->sample(arg2);
     } catch (const std::exception& e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
@@ -4009,227 +3802,47 @@ fail:
 }
 
 
-SWIGINTERN PyObject *CPInitialValueSolver_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_CPInitialValueSolver, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *_wrap_new_LaxAdvectionSolver1d__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_SiteSampler_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  int arg5 ;
-  unsigned int val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
+  SiteSampler *arg1 = (SiteSampler *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  LaxAdvectionSolver1d *result = 0 ;
+  unsigned int result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_LaxAdvectionSolver1d",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LaxAdvectionSolver1d" "', argument " "1"" of type '" "unsigned int""'");
-  } 
-  arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LaxAdvectionSolver1d" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LaxAdvectionSolver1d" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_LaxAdvectionSolver1d" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  ecode5 = SWIG_AsVal_int(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_LaxAdvectionSolver1d" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
+  if (!PyArg_ParseTuple(args,(char *)"O:SiteSampler_size",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_SiteSampler, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SiteSampler_size" "', argument " "1"" of type '" "SiteSampler const *""'"); 
+  }
+  arg1 = reinterpret_cast< SiteSampler * >(argp1);
   {
     try {
-      result = (LaxAdvectionSolver1d *)new LaxAdvectionSolver1d(arg1,arg2,arg3,arg4,arg5);
+      result = (unsigned int)((SiteSampler const *)arg1)->size();
     } catch (const std::exception& e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LaxAdvectionSolver1d, SWIG_POINTER_NEW |  0 );
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_new_LaxAdvectionSolver1d__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_delete_SiteSampler(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  unsigned int val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  LaxAdvectionSolver1d *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_LaxAdvectionSolver1d",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LaxAdvectionSolver1d" "', argument " "1"" of type '" "unsigned int""'");
-  } 
-  arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LaxAdvectionSolver1d" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LaxAdvectionSolver1d" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_LaxAdvectionSolver1d" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  {
-    try {
-      result = (LaxAdvectionSolver1d *)new LaxAdvectionSolver1d(arg1,arg2,arg3,arg4);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LaxAdvectionSolver1d, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_LaxAdvectionSolver1d(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[6];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? (int)PyObject_Length(args) : 0;
-  for (ii = 0; (ii < 5) && (ii < argc); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 4) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            return _wrap_new_LaxAdvectionSolver1d__SWIG_1(self, args);
-          }
-        }
-      }
-    }
-  }
-  if (argc == 5) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_int(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              return _wrap_new_LaxAdvectionSolver1d__SWIG_0(self, args);
-            }
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_LaxAdvectionSolver1d'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    LaxAdvectionSolver1d::LaxAdvectionSolver1d(unsigned int,double,double,double,int)\n"
-    "    LaxAdvectionSolver1d::LaxAdvectionSolver1d(unsigned int,double,double,double)\n");
-  return 0;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_LaxAdvectionSolver1d(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  LaxAdvectionSolver1d *arg1 = (LaxAdvectionSolver1d *) 0 ;
+  SiteSampler *arg1 = (SiteSampler *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_LaxAdvectionSolver1d",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_LaxAdvectionSolver1d, SWIG_POINTER_DISOWN |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_SiteSampler",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_SiteSampler, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_LaxAdvectionSolver1d" "', argument " "1"" of type '" "LaxAdvectionSolver1d *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SiteSampler" "', argument " "1"" of type '" "SiteSampler *""'"); 
   }
-  arg1 = reinterpret_cast< LaxAdvectionSolver1d * >(argp1);
+  arg1 = reinterpret_cast< SiteSampler * >(argp1);
   {
     try {
       delete arg1;
@@ -4244,227 +3857,134 @@ fail:
 }
 
 
-SWIGINTERN PyObject *LaxAdvectionSolver1d_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *SiteSampler_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_LaxAdvectionSolver1d, SWIG_NewClientData(obj));
+  SWIG_TypeNewClientData(SWIGTYPE_p_SiteSampler, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *_wrap_new_WaveSolver1d__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_CPP11Random__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  int arg5 ;
-  unsigned int val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  WaveSolver1d *result = 0 ;
+  CPP11Random *result = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_WaveSolver1d",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_WaveSolver1d" "', argument " "1"" of type '" "unsigned int""'");
-  } 
-  arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WaveSolver1d" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WaveSolver1d" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_WaveSolver1d" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  ecode5 = SWIG_AsVal_int(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_WaveSolver1d" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
+  if (!PyArg_ParseTuple(args,(char *)":new_CPP11Random")) SWIG_fail;
   {
     try {
-      result = (WaveSolver1d *)new WaveSolver1d(arg1,arg2,arg3,arg4,arg5);
+      result = (CPP11Random *)new CPP11Random();
     } catch (const std::exception& e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_WaveSolver1d, SWIG_POINTER_NEW |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_CPP11Random, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_new_WaveSolver1d__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_CPP11Random__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
   unsigned int val1 ;
   int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  WaveSolver1d *result = 0 ;
+  CPP11Random *result = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_WaveSolver1d",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:new_CPP11Random",&obj0)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_WaveSolver1d" "', argument " "1"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CPP11Random" "', argument " "1"" of type '" "unsigned int""'");
   } 
   arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WaveSolver1d" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WaveSolver1d" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_WaveSolver1d" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
   {
     try {
-      result = (WaveSolver1d *)new WaveSolver1d(arg1,arg2,arg3,arg4);
+      result = (CPP11Random *)new CPP11Random(arg1);
     } catch (const std::exception& e) {
       SWIG_exception(SWIG_RuntimeError, e.what());
     }
   }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_WaveSolver1d, SWIG_POINTER_NEW |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_CPP11Random, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_new_WaveSolver1d(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_CPP11Random(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[6];
+  PyObject *argv[2];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = args ? (int)PyObject_Length(args) : 0;
-  for (ii = 0; (ii < 5) && (ii < argc); ii++) {
+  for (ii = 0; (ii < 1) && (ii < argc); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
-  if (argc == 4) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            return _wrap_new_WaveSolver1d__SWIG_1(self, args);
-          }
-        }
-      }
-    }
+  if (argc == 0) {
+    return _wrap_new_CPP11Random__SWIG_0(self, args);
   }
-  if (argc == 5) {
+  if (argc == 1) {
     int _v;
     {
       int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
       _v = SWIG_CheckState(res);
     }
     if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_int(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              return _wrap_new_WaveSolver1d__SWIG_0(self, args);
-            }
-          }
-        }
-      }
+      return _wrap_new_CPP11Random__SWIG_1(self, args);
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_WaveSolver1d'.\n"
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_CPP11Random'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    WaveSolver1d::WaveSolver1d(unsigned int,double,double,double,int)\n"
-    "    WaveSolver1d::WaveSolver1d(unsigned int,double,double,double)\n");
+    "    CPP11Random::CPP11Random()\n"
+    "    CPP11Random::CPP11Random(unsigned int)\n");
   return 0;
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_WaveSolver1d(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CPP11Random___call__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  WaveSolver1d *arg1 = (WaveSolver1d *) 0 ;
+  CPP11Random *arg1 = (CPP11Random *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CPP11Random___call__",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CPP11Random, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CPP11Random___call__" "', argument " "1"" of type '" "CPP11Random *""'"); 
+  }
+  arg1 = reinterpret_cast< CPP11Random * >(argp1);
+  {
+    try {
+      result = (double)(arg1)->operator ()();
+    } catch (const std::exception& e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_CPP11Random(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CPP11Random *arg1 = (CPP11Random *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_WaveSolver1d",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_WaveSolver1d, SWIG_POINTER_DISOWN |  0 );
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_CPP11Random",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CPP11Random, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_WaveSolver1d" "', argument " "1"" of type '" "WaveSolver1d *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CPP11Random" "', argument " "1"" of type '" "CPP11Random *""'"); 
   }
-  arg1 = reinterpret_cast< WaveSolver1d * >(argp1);
+  arg1 = reinterpret_cast< CPP11Random * >(argp1);
   {
     try {
       delete arg1;
@@ -4479,859 +3999,47 @@ fail:
 }
 
 
-SWIGINTERN PyObject *WaveSolver1d_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *CPP11Random_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_WaveSolver1d, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *_wrap_new_Leapfrog__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  int arg5 ;
-  unsigned int val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  Leapfrog *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_Leapfrog",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Leapfrog" "', argument " "1"" of type '" "unsigned int""'");
-  } 
-  arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Leapfrog" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Leapfrog" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_Leapfrog" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  ecode5 = SWIG_AsVal_int(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_Leapfrog" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
-  {
-    try {
-      result = (Leapfrog *)new Leapfrog(arg1,arg2,arg3,arg4,arg5);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Leapfrog, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Leapfrog__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  unsigned int val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  Leapfrog *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_Leapfrog",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Leapfrog" "', argument " "1"" of type '" "unsigned int""'");
-  } 
-  arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Leapfrog" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Leapfrog" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_Leapfrog" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  {
-    try {
-      result = (Leapfrog *)new Leapfrog(arg1,arg2,arg3,arg4);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Leapfrog, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Leapfrog(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[6];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? (int)PyObject_Length(args) : 0;
-  for (ii = 0; (ii < 5) && (ii < argc); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 4) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            return _wrap_new_Leapfrog__SWIG_1(self, args);
-          }
-        }
-      }
-    }
-  }
-  if (argc == 5) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_int(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              return _wrap_new_Leapfrog__SWIG_0(self, args);
-            }
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_Leapfrog'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    Leapfrog::Leapfrog(unsigned int,double,double,double,int)\n"
-    "    Leapfrog::Leapfrog(unsigned int,double,double,double)\n");
-  return 0;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_Leapfrog(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Leapfrog *arg1 = (Leapfrog *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_Leapfrog",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Leapfrog, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Leapfrog" "', argument " "1"" of type '" "Leapfrog *""'"); 
-  }
-  arg1 = reinterpret_cast< Leapfrog * >(argp1);
-  {
-    try {
-      delete arg1;
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *Leapfrog_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_Leapfrog, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *_wrap_new_LWendroff__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  int arg5 ;
-  unsigned int val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  LWendroff *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_LWendroff",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LWendroff" "', argument " "1"" of type '" "unsigned int""'");
-  } 
-  arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LWendroff" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LWendroff" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_LWendroff" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  ecode5 = SWIG_AsVal_int(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_LWendroff" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
-  {
-    try {
-      result = (LWendroff *)new LWendroff(arg1,arg2,arg3,arg4,arg5);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LWendroff, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_LWendroff__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  unsigned int val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  LWendroff *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_LWendroff",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LWendroff" "', argument " "1"" of type '" "unsigned int""'");
-  } 
-  arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LWendroff" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LWendroff" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_LWendroff" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  {
-    try {
-      result = (LWendroff *)new LWendroff(arg1,arg2,arg3,arg4);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LWendroff, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_LWendroff(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[6];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? (int)PyObject_Length(args) : 0;
-  for (ii = 0; (ii < 5) && (ii < argc); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 4) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            return _wrap_new_LWendroff__SWIG_1(self, args);
-          }
-        }
-      }
-    }
-  }
-  if (argc == 5) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_int(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              return _wrap_new_LWendroff__SWIG_0(self, args);
-            }
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_LWendroff'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    LWendroff::LWendroff(unsigned int,double,double,double,int)\n"
-    "    LWendroff::LWendroff(unsigned int,double,double,double)\n");
-  return 0;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_LWendroff(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  LWendroff *arg1 = (LWendroff *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_LWendroff",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_LWendroff, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_LWendroff" "', argument " "1"" of type '" "LWendroff *""'"); 
-  }
-  arg1 = reinterpret_cast< LWendroff * >(argp1);
-  {
-    try {
-      delete arg1;
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *LWendroff_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_LWendroff, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *_wrap_new_WaveSolver2d__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  unsigned int *arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  double arg5 ;
-  int arg6 ;
-  PyArrayObject *array1 = NULL ;
-  int is_new_object1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  double val5 ;
-  int ecode5 = 0 ;
-  int val6 ;
-  int ecode6 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  PyObject * obj5 = 0 ;
-  WaveSolver2d *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:new_WaveSolver2d",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
-  {
-    npy_intp size[1] = {
-      2 
-    };
-    array1 = obj_to_array_contiguous_allow_conversion(obj0,
-      NPY_UINT,
-      &is_new_object1);
-    if (!array1 || !require_dimensions(array1, 1) ||
-      !require_size(array1, size, 1)) SWIG_fail;
-    arg1 = (unsigned int *) array_data(array1);
-  }
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WaveSolver2d" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WaveSolver2d" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_WaveSolver2d" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  ecode5 = SWIG_AsVal_double(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_WaveSolver2d" "', argument " "5"" of type '" "double""'");
-  } 
-  arg5 = static_cast< double >(val5);
-  ecode6 = SWIG_AsVal_int(obj5, &val6);
-  if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_WaveSolver2d" "', argument " "6"" of type '" "int""'");
-  } 
-  arg6 = static_cast< int >(val6);
-  {
-    try {
-      result = (WaveSolver2d *)new WaveSolver2d((unsigned int const (*))arg1,arg2,arg3,arg4,arg5,arg6);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_WaveSolver2d, SWIG_POINTER_NEW |  0 );
-  {
-    if (is_new_object1 && array1)
-    {
-      Py_DECREF(array1); 
-    }
-  }
-  return resultobj;
-fail:
-  {
-    if (is_new_object1 && array1)
-    {
-      Py_DECREF(array1); 
-    }
-  }
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_WaveSolver2d__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  unsigned int *arg1 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
-  double arg5 ;
-  PyArrayObject *array1 = NULL ;
-  int is_new_object1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  double val5 ;
-  int ecode5 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  WaveSolver2d *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_WaveSolver2d",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
-  {
-    npy_intp size[1] = {
-      2 
-    };
-    array1 = obj_to_array_contiguous_allow_conversion(obj0,
-      NPY_UINT,
-      &is_new_object1);
-    if (!array1 || !require_dimensions(array1, 1) ||
-      !require_size(array1, size, 1)) SWIG_fail;
-    arg1 = (unsigned int *) array_data(array1);
-  }
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WaveSolver2d" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WaveSolver2d" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_WaveSolver2d" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  ecode5 = SWIG_AsVal_double(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_WaveSolver2d" "', argument " "5"" of type '" "double""'");
-  } 
-  arg5 = static_cast< double >(val5);
-  {
-    try {
-      result = (WaveSolver2d *)new WaveSolver2d((unsigned int const (*))arg1,arg2,arg3,arg4,arg5);
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_WaveSolver2d, SWIG_POINTER_NEW |  0 );
-  {
-    if (is_new_object1 && array1)
-    {
-      Py_DECREF(array1); 
-    }
-  }
-  return resultobj;
-fail:
-  {
-    if (is_new_object1 && array1)
-    {
-      Py_DECREF(array1); 
-    }
-  }
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_WaveSolver2d(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[7];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = args ? (int)PyObject_Length(args) : 0;
-  for (ii = 0; (ii < 6) && (ii < argc); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 5) {
-    int _v;
-    {
-      _v = is_array(argv[0]) || PySequence_Check(argv[0]);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_double(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              return _wrap_new_WaveSolver2d__SWIG_1(self, args);
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 6) {
-    int _v;
-    {
-      _v = is_array(argv[0]) || PySequence_Check(argv[0]);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_double(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_double(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              {
-                int res = SWIG_AsVal_int(argv[5], NULL);
-                _v = SWIG_CheckState(res);
-              }
-              if (_v) {
-                return _wrap_new_WaveSolver2d__SWIG_0(self, args);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_WaveSolver2d'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    WaveSolver2d::WaveSolver2d(unsigned int const [2],double,double,double,double,int)\n"
-    "    WaveSolver2d::WaveSolver2d(unsigned int const [2],double,double,double,double)\n");
-  return 0;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_WaveSolver2d(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  WaveSolver2d *arg1 = (WaveSolver2d *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_WaveSolver2d",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_WaveSolver2d, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_WaveSolver2d" "', argument " "1"" of type '" "WaveSolver2d *""'"); 
-  }
-  arg1 = reinterpret_cast< WaveSolver2d * >(argp1);
-  {
-    try {
-      delete arg1;
-    } catch (const std::exception& e) {
-      SWIG_exception(SWIG_RuntimeError, e.what());
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *WaveSolver2d_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_WaveSolver2d, SWIG_NewClientData(obj));
+  SWIG_TypeNewClientData(SWIGTYPE_p_CPP11Random, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"SWIG_PyInstanceMethod_New", (PyCFunction)SWIG_PyInstanceMethod_New, METH_O, NULL},
-	 { (char *)"delete_CPInitialValueSolver", _wrap_delete_CPInitialValueSolver, METH_VARARGS, NULL},
-	 { (char *)"CPInitialValueSolver_setInitialValues", _wrap_CPInitialValueSolver_setInitialValues, METH_VARARGS, NULL},
-	 { (char *)"CPInitialValueSolver_convert", _wrap_CPInitialValueSolver_convert, METH_VARARGS, NULL},
-	 { (char *)"CPInitialValueSolver_step", _wrap_CPInitialValueSolver_step, METH_VARARGS, NULL},
-	 { (char *)"CPInitialValueSolver_resultTime", _wrap_CPInitialValueSolver_resultTime, METH_VARARGS, NULL},
-	 { (char *)"CPInitialValueSolver_swigregister", CPInitialValueSolver_swigregister, METH_VARARGS, NULL},
-	 { (char *)"new_LaxAdvectionSolver1d", _wrap_new_LaxAdvectionSolver1d, METH_VARARGS, NULL},
-	 { (char *)"delete_LaxAdvectionSolver1d", _wrap_delete_LaxAdvectionSolver1d, METH_VARARGS, NULL},
-	 { (char *)"LaxAdvectionSolver1d_swigregister", LaxAdvectionSolver1d_swigregister, METH_VARARGS, NULL},
-	 { (char *)"new_WaveSolver1d", _wrap_new_WaveSolver1d, METH_VARARGS, NULL},
-	 { (char *)"delete_WaveSolver1d", _wrap_delete_WaveSolver1d, METH_VARARGS, NULL},
-	 { (char *)"WaveSolver1d_swigregister", WaveSolver1d_swigregister, METH_VARARGS, NULL},
-	 { (char *)"new_Leapfrog", _wrap_new_Leapfrog, METH_VARARGS, NULL},
-	 { (char *)"delete_Leapfrog", _wrap_delete_Leapfrog, METH_VARARGS, NULL},
-	 { (char *)"Leapfrog_swigregister", Leapfrog_swigregister, METH_VARARGS, NULL},
-	 { (char *)"new_LWendroff", _wrap_new_LWendroff, METH_VARARGS, NULL},
-	 { (char *)"delete_LWendroff", _wrap_delete_LWendroff, METH_VARARGS, NULL},
-	 { (char *)"LWendroff_swigregister", LWendroff_swigregister, METH_VARARGS, NULL},
-	 { (char *)"new_WaveSolver2d", _wrap_new_WaveSolver2d, METH_VARARGS, NULL},
-	 { (char *)"delete_WaveSolver2d", _wrap_delete_WaveSolver2d, METH_VARARGS, NULL},
-	 { (char *)"WaveSolver2d_swigregister", WaveSolver2d_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_SiteSampler", _wrap_new_SiteSampler, METH_VARARGS, NULL},
+	 { (char *)"SiteSampler_sample", _wrap_SiteSampler_sample, METH_VARARGS, NULL},
+	 { (char *)"SiteSampler_size", _wrap_SiteSampler_size, METH_VARARGS, NULL},
+	 { (char *)"delete_SiteSampler", _wrap_delete_SiteSampler, METH_VARARGS, NULL},
+	 { (char *)"SiteSampler_swigregister", SiteSampler_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_CPP11Random", _wrap_new_CPP11Random, METH_VARARGS, NULL},
+	 { (char *)"CPP11Random___call__", _wrap_CPP11Random___call__, METH_VARARGS, NULL},
+	 { (char *)"delete_CPP11Random", _wrap_delete_CPP11Random, METH_VARARGS, NULL},
+	 { (char *)"CPP11Random_swigregister", CPP11Random_swigregister, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
-static void *_p_LWendroffTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((CPInitialValueSolver *)  ((LWendroff *) x));
-}
-static void *_p_LaxAdvectionSolver1dTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((CPInitialValueSolver *)  ((LaxAdvectionSolver1d *) x));
-}
-static void *_p_WaveSolver1dTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((CPInitialValueSolver *)  ((WaveSolver1d *) x));
-}
-static void *_p_LeapfrogTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((CPInitialValueSolver *)  ((Leapfrog *) x));
-}
-static void *_p_WaveSolver2dTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((CPInitialValueSolver *)  ((WaveSolver2d *) x));
-}
-static swig_type_info _swigt__p_CPInitialValueSolver = {"_p_CPInitialValueSolver", "CPInitialValueSolver *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_LWendroff = {"_p_LWendroff", "LWendroff *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_LaxAdvectionSolver1d = {"_p_LaxAdvectionSolver1d", "LaxAdvectionSolver1d *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_Leapfrog = {"_p_Leapfrog", "Leapfrog *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_WaveSolver1d = {"_p_WaveSolver1d", "WaveSolver1d *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_WaveSolver2d = {"_p_WaveSolver2d", "WaveSolver2d *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_CPP11Random = {"_p_CPP11Random", "CPP11Random *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_SiteSampler = {"_p_SiteSampler", "SiteSampler *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_CPInitialValueSolver,
-  &_swigt__p_LWendroff,
-  &_swigt__p_LaxAdvectionSolver1d,
-  &_swigt__p_Leapfrog,
-  &_swigt__p_WaveSolver1d,
-  &_swigt__p_WaveSolver2d,
+  &_swigt__p_CPP11Random,
+  &_swigt__p_SiteSampler,
   &_swigt__p_char,
 };
 
-static swig_cast_info _swigc__p_CPInitialValueSolver[] = {  {&_swigt__p_LWendroff, _p_LWendroffTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_CPInitialValueSolver, 0, 0, 0},  {&_swigt__p_LaxAdvectionSolver1d, _p_LaxAdvectionSolver1dTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_WaveSolver1d, _p_WaveSolver1dTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_Leapfrog, _p_LeapfrogTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_WaveSolver2d, _p_WaveSolver2dTo_p_CPInitialValueSolver, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_LWendroff[] = {  {&_swigt__p_LWendroff, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_LaxAdvectionSolver1d[] = {  {&_swigt__p_LaxAdvectionSolver1d, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Leapfrog[] = {  {&_swigt__p_Leapfrog, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_WaveSolver1d[] = {  {&_swigt__p_WaveSolver1d, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_WaveSolver2d[] = {  {&_swigt__p_WaveSolver2d, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_CPP11Random[] = {  {&_swigt__p_CPP11Random, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_SiteSampler[] = {  {&_swigt__p_SiteSampler, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_CPInitialValueSolver,
-  _swigc__p_LWendroff,
-  _swigc__p_LaxAdvectionSolver1d,
-  _swigc__p_Leapfrog,
-  _swigc__p_WaveSolver1d,
-  _swigc__p_WaveSolver2d,
+  _swigc__p_CPP11Random,
+  _swigc__p_SiteSampler,
   _swigc__p_char,
 };
 
