@@ -2953,12 +2953,14 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_CPInitialValueSolver swig_types[0]
-#define SWIGTYPE_p_LaxAdvectionSolver1d swig_types[1]
-#define SWIGTYPE_p_WaveSolver1d swig_types[2]
-#define SWIGTYPE_p_WaveSolver2d swig_types[3]
-#define SWIGTYPE_p_char swig_types[4]
-static swig_type_info *swig_types[6];
-static swig_module_info swig_module = {swig_types, 5, 0, 0, 0, 0};
+#define SWIGTYPE_p_LWendroff swig_types[1]
+#define SWIGTYPE_p_LaxAdvectionSolver1d swig_types[2]
+#define SWIGTYPE_p_Leapfrog swig_types[3]
+#define SWIGTYPE_p_WaveSolver1d swig_types[4]
+#define SWIGTYPE_p_WaveSolver2d swig_types[5]
+#define SWIGTYPE_p_char swig_types[6]
+static swig_type_info *swig_types[8];
+static swig_module_info swig_module = {swig_types, 7, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3075,6 +3077,8 @@ namespace swig {
 #include "LaxAdvectionSolver1d.hh"
 #include "WaveSolver2d.hh"
 #include "WaveSolver1d.hh"
+#include "LWendroff.hh"
+#include "Leapfrog.hh"
 
 
 #include <limits.h>
@@ -4482,6 +4486,476 @@ SWIGINTERN PyObject *WaveSolver1d_swigregister(PyObject *SWIGUNUSEDPARM(self), P
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_new_Leapfrog__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned int arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  int arg5 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  Leapfrog *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_Leapfrog",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Leapfrog" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Leapfrog" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Leapfrog" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_Leapfrog" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_Leapfrog" "', argument " "5"" of type '" "int""'");
+  } 
+  arg5 = static_cast< int >(val5);
+  {
+    try {
+      result = (Leapfrog *)new Leapfrog(arg1,arg2,arg3,arg4,arg5);
+    } catch (const std::exception& e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Leapfrog, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_Leapfrog__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned int arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  Leapfrog *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_Leapfrog",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Leapfrog" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Leapfrog" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Leapfrog" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_Leapfrog" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  {
+    try {
+      result = (Leapfrog *)new Leapfrog(arg1,arg2,arg3,arg4);
+    } catch (const std::exception& e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Leapfrog, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_Leapfrog(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? (int)PyObject_Length(args) : 0;
+  for (ii = 0; (ii < 5) && (ii < argc); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_Leapfrog__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_new_Leapfrog__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_Leapfrog'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Leapfrog::Leapfrog(unsigned int,double,double,double,int)\n"
+    "    Leapfrog::Leapfrog(unsigned int,double,double,double)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_Leapfrog(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Leapfrog *arg1 = (Leapfrog *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_Leapfrog",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Leapfrog, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Leapfrog" "', argument " "1"" of type '" "Leapfrog *""'"); 
+  }
+  arg1 = reinterpret_cast< Leapfrog * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (const std::exception& e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *Leapfrog_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_Leapfrog, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_LWendroff__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned int arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  int arg5 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  LWendroff *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_LWendroff",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LWendroff" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LWendroff" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LWendroff" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_LWendroff" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_LWendroff" "', argument " "5"" of type '" "int""'");
+  } 
+  arg5 = static_cast< int >(val5);
+  {
+    try {
+      result = (LWendroff *)new LWendroff(arg1,arg2,arg3,arg4,arg5);
+    } catch (const std::exception& e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LWendroff, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_LWendroff__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned int arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  LWendroff *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_LWendroff",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LWendroff" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LWendroff" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LWendroff" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_LWendroff" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  {
+    try {
+      result = (LWendroff *)new LWendroff(arg1,arg2,arg3,arg4);
+    } catch (const std::exception& e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LWendroff, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_LWendroff(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? (int)PyObject_Length(args) : 0;
+  for (ii = 0; (ii < 5) && (ii < argc); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_LWendroff__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_new_LWendroff__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_LWendroff'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    LWendroff::LWendroff(unsigned int,double,double,double,int)\n"
+    "    LWendroff::LWendroff(unsigned int,double,double,double)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_LWendroff(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  LWendroff *arg1 = (LWendroff *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_LWendroff",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_LWendroff, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_LWendroff" "', argument " "1"" of type '" "LWendroff *""'"); 
+  }
+  arg1 = reinterpret_cast< LWendroff * >(argp1);
+  {
+    try {
+      delete arg1;
+    } catch (const std::exception& e) {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *LWendroff_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_LWendroff, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_new_WaveSolver2d__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   unsigned int *arg1 ;
@@ -4795,6 +5269,12 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_WaveSolver1d", _wrap_new_WaveSolver1d, METH_VARARGS, NULL},
 	 { (char *)"delete_WaveSolver1d", _wrap_delete_WaveSolver1d, METH_VARARGS, NULL},
 	 { (char *)"WaveSolver1d_swigregister", WaveSolver1d_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_Leapfrog", _wrap_new_Leapfrog, METH_VARARGS, NULL},
+	 { (char *)"delete_Leapfrog", _wrap_delete_Leapfrog, METH_VARARGS, NULL},
+	 { (char *)"Leapfrog_swigregister", Leapfrog_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_LWendroff", _wrap_new_LWendroff, METH_VARARGS, NULL},
+	 { (char *)"delete_LWendroff", _wrap_delete_LWendroff, METH_VARARGS, NULL},
+	 { (char *)"LWendroff_swigregister", LWendroff_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_WaveSolver2d", _wrap_new_WaveSolver2d, METH_VARARGS, NULL},
 	 { (char *)"delete_WaveSolver2d", _wrap_delete_WaveSolver2d, METH_VARARGS, NULL},
 	 { (char *)"WaveSolver2d_swigregister", WaveSolver2d_swigregister, METH_VARARGS, NULL},
@@ -4804,38 +5284,52 @@ static PyMethodDef SwigMethods[] = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
+static void *_p_LWendroffTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((CPInitialValueSolver *)  ((LWendroff *) x));
+}
 static void *_p_LaxAdvectionSolver1dTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((CPInitialValueSolver *)  ((LaxAdvectionSolver1d *) x));
 }
 static void *_p_WaveSolver1dTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((CPInitialValueSolver *)  ((WaveSolver1d *) x));
 }
+static void *_p_LeapfrogTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((CPInitialValueSolver *)  ((Leapfrog *) x));
+}
 static void *_p_WaveSolver2dTo_p_CPInitialValueSolver(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((CPInitialValueSolver *)  ((WaveSolver2d *) x));
 }
 static swig_type_info _swigt__p_CPInitialValueSolver = {"_p_CPInitialValueSolver", "CPInitialValueSolver *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_LWendroff = {"_p_LWendroff", "LWendroff *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LaxAdvectionSolver1d = {"_p_LaxAdvectionSolver1d", "LaxAdvectionSolver1d *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Leapfrog = {"_p_Leapfrog", "Leapfrog *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_WaveSolver1d = {"_p_WaveSolver1d", "WaveSolver1d *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_WaveSolver2d = {"_p_WaveSolver2d", "WaveSolver2d *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_CPInitialValueSolver,
+  &_swigt__p_LWendroff,
   &_swigt__p_LaxAdvectionSolver1d,
+  &_swigt__p_Leapfrog,
   &_swigt__p_WaveSolver1d,
   &_swigt__p_WaveSolver2d,
   &_swigt__p_char,
 };
 
-static swig_cast_info _swigc__p_CPInitialValueSolver[] = {  {&_swigt__p_CPInitialValueSolver, 0, 0, 0},  {&_swigt__p_LaxAdvectionSolver1d, _p_LaxAdvectionSolver1dTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_WaveSolver1d, _p_WaveSolver1dTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_WaveSolver2d, _p_WaveSolver2dTo_p_CPInitialValueSolver, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_CPInitialValueSolver[] = {  {&_swigt__p_LWendroff, _p_LWendroffTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_CPInitialValueSolver, 0, 0, 0},  {&_swigt__p_LaxAdvectionSolver1d, _p_LaxAdvectionSolver1dTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_WaveSolver1d, _p_WaveSolver1dTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_Leapfrog, _p_LeapfrogTo_p_CPInitialValueSolver, 0, 0},  {&_swigt__p_WaveSolver2d, _p_WaveSolver2dTo_p_CPInitialValueSolver, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_LWendroff[] = {  {&_swigt__p_LWendroff, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LaxAdvectionSolver1d[] = {  {&_swigt__p_LaxAdvectionSolver1d, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Leapfrog[] = {  {&_swigt__p_Leapfrog, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_WaveSolver1d[] = {  {&_swigt__p_WaveSolver1d, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_WaveSolver2d[] = {  {&_swigt__p_WaveSolver2d, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_CPInitialValueSolver,
+  _swigc__p_LWendroff,
   _swigc__p_LaxAdvectionSolver1d,
+  _swigc__p_Leapfrog,
   _swigc__p_WaveSolver1d,
   _swigc__p_WaveSolver2d,
   _swigc__p_char,

@@ -23,7 +23,7 @@ x = linspace(0.0, string_length, n_spatial_points)
 dx = x[1] - x[0]
 
 # Simulation time step
-dt_factor = 1.01 
+dt_factor = 1
 dt = dt_factor*abs(dx/c)
 
 # Total number of time steps for the simulation
@@ -34,8 +34,11 @@ maxsteps = int(4*(string_length+dx)/(c*dt))
 # boundary_type = 0: the string is fixed at the edges
 # boundary_type = 1: periodic boundary conditions
 # boundary_type = 2: the string is free at the edges
-boundary_type = 1
+boundary_type = 0
+
+# start the Lax to get a first point and continue with 
 solver = LaxAdvectionSolver1d(n_spatial_points, c, dt, dx, boundary_type)
+
 
 # Set up the initial values for the solver
 initial_values = triangle_wave(x, 1.0, 3.0, 2.0)
@@ -43,7 +46,13 @@ initial_values2 = triangle_wave(x, 1.0, 3.0 +c*dt , 2.0)
 
 # initial_values = gaussian_wave(x, 1.0, 3.0, 1.0)
 solver.setInitialValues(initial_values)
-solver.setInitialValues(initial_values2, 1)
+solver.step()
+next_vals = solver.convert()
+
+solver = Leapfrog(n_spatial_points, c, dt, dx, boundary_type)
+
+solver.setInitialValues(initial_values, 1)
+solver.setInitialValues(next_vals, 0)
 
 # Plot for the waveform
 ax = figure().add_subplot(111)

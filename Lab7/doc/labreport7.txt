@@ -3,7 +3,7 @@ Explain what you see using von Neumann results:
 When we change the dt_factor value in "LaxAdvectionSolver1d_example.py" from 1 to 1.01 and 0.8, the results we see are caused by changes in the amplification factor. When increased to 1.01 the amplification factor itself will be greater than one and will amplify by definition. Although when decreased to 0.8, the time step results in a deamplification since the amplification will end up lower than one.
 
 Explain why the waves do no reflect from the boundaries:
-They do not reflect at the boundary for the fully free or fixed cases because the solver is told only to keep solving for a positive(forward moving wave) case. If we want the wave to reflect there must be some condition for the wave to become negatively directed after the whole wave has reached a certain x value.
+They do not reflect at the boundary for the fully free or fixed cases because by definition the lax advection scheme is a function which only depends on the point before and after the point one the program is at in other words the j term only depends on j-1 and j+1. When the wave reaches the end(the right side boundary at 0) then the point before and after as it approaches the boundary both become 0 so how can the program know where to go next? On the other hand, Lax Wendroff uses the current as well as previous and next points so the wave will reflect there. 
 
 What values of Delta t give rise to instability:
 The solution becomes unstable at values of Delta t > or < 1 and is only stable at 1. 

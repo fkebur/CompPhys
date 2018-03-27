@@ -31,11 +31,16 @@ import_array();
 #include "LaxAdvectionSolver1d.hh"
 #include "WaveSolver2d.hh"
 #include "WaveSolver1d.hh"
+#include "LWendroff.hh"
+#include "Leapfrog.hh"
 %}
 
 %include "CPInitialValueSolver.hh"
 %include "LaxAdvectionSolver1d.hh"
 %include "WaveSolver1d.hh"
+%include "Leapfrog.hh"
+%include "LWendroff.hh"
+
 
 // Constructor of the "WaveSolver2d" class includes an array argument.
 // We will map this argument into a numpy array.

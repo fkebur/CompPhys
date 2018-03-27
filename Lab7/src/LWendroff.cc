@@ -1,6 +1,6 @@
 #include <cassert>
 
-#include "WaveSolver1d.hh"
+#include "LWendroff.hh"
 
 enum {
     FIXED_BOUNDARY = 0,
@@ -9,7 +9,7 @@ enum {
     N_BOUNDARY_TYPES
 };
 
-WaveSolver1d::WaveSolver1d(const unsigned nSpatialPoints,
+LWendroff::LWendroff(const unsigned nSpatialPoints,
                                            const double c,
                                            const double dt,
                                            const double dx,
@@ -23,13 +23,12 @@ WaveSolver1d::WaveSolver1d(const unsigned nSpatialPoints,
     assert(boundaryType_ < N_BOUNDARY_TYPES);
 }
 
-void WaveSolver1d::propagate(double* next, const double** previous)
+void LWendroff::propagate(double* next, const double** previous)
 {
     const unsigned lengthMinusOne = sizes_[0] - 1;
     const double rho = c_*dt_/dx_;
     const double rhoSq = rho * rho ;
     const double *prev = previous[0];
-    // const double *bprev = previous[1];
 
     // The Lax updating formula was given at the lecture:
     // http://highenergy.phys.ttu.edu/~igv/ComputationalPhysics/Lectures/lecture7.pdf
@@ -45,9 +44,6 @@ void WaveSolver1d::propagate(double* next, const double** previous)
         next[0] = prev[0];
         for (unsigned j=1; j<lengthMinusOne; ++j)
             
-	/* Leapfrog scheme */
-	// next[j] = rhoSq*(prev[j+1]-2*prev[j]+prev[j-1]) + 2*prev[j] - bprev[j];	  
-	
 	/* Lax - Wendroff Scheme */
 	next[j] = prev[j] - rho*0.5*(prev[j+1] - prev[j-1]) + 0.5*rhoSq*(prev[j+1] + prev[j-1] - 2*prev[j]);
         
@@ -64,9 +60,6 @@ void WaveSolver1d::propagate(double* next, const double** previous)
         const unsigned jp1 = (j + 1) % length;
         const unsigned jm1 = j ? j - 1 : lengthMinusOne;
 	
-        /* Leapfrog scheme*/
-	// next[j] = rhoSq*(prev[jp1]-2*prev[j]+prev[jm1]) + 2*prev[j] - bprev[j];
-	
 	/* Lax - Wendroff Scheme */
 	next[j] = prev[j] - rho*0.5*(prev[jp1] - prev[jm1]) + 0.5*rhoSq*(prev[jp1] + prev[jm1] - 2*prev[j]);
         
@@ -79,9 +72,6 @@ void WaveSolver1d::propagate(double* next, const double** previous)
         // Assume a string with free ends
         for (unsigned j=1; j<lengthMinusOne; ++j)
         
-	/* Leapfrog scheme*/
-	// next[j] = rhoSq*(prev[j+1]-2*prev[j]+prev[j-1]) + 2*prev[j] - bprev[j];
-	
 	/* Lax - Wendroff Scheme */
 	next[j] = prev[j] - rho*0.5*(prev[j+1] - prev[j-1]) + 0.5*rhoSq*(prev[j+1] + prev[j-1] - 2*prev[j]);
 	

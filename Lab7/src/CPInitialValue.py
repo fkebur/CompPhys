@@ -117,6 +117,40 @@ class WaveSolver1d(CPInitialValueSolver):
 WaveSolver1d_swigregister = _CPInitialValue.WaveSolver1d_swigregister
 WaveSolver1d_swigregister(WaveSolver1d)
 
+class Leapfrog(CPInitialValueSolver):
+    __swig_setmethods__ = {}
+    for _s in [CPInitialValueSolver]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Leapfrog, name, value)
+    __swig_getmethods__ = {}
+    for _s in [CPInitialValueSolver]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, Leapfrog, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _CPInitialValue.new_Leapfrog(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _CPInitialValue.delete_Leapfrog
+    __del__ = lambda self : None;
+Leapfrog_swigregister = _CPInitialValue.Leapfrog_swigregister
+Leapfrog_swigregister(Leapfrog)
+
+class LWendroff(CPInitialValueSolver):
+    __swig_setmethods__ = {}
+    for _s in [CPInitialValueSolver]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, LWendroff, name, value)
+    __swig_getmethods__ = {}
+    for _s in [CPInitialValueSolver]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, LWendroff, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _CPInitialValue.new_LWendroff(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _CPInitialValue.delete_LWendroff
+    __del__ = lambda self : None;
+LWendroff_swigregister = _CPInitialValue.LWendroff_swigregister
+LWendroff_swigregister(LWendroff)
+
 class WaveSolver2d(CPInitialValueSolver):
     __swig_setmethods__ = {}
     for _s in [CPInitialValueSolver]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
