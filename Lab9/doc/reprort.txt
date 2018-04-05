@@ -1,0 +1,4 @@
+Which solution is more efficient in the current situation: the one employing a mutex or the one using an atomic variable? 
+The one using the atomic is faster and thus more efficient.
+
+

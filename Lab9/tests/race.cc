@@ -10,15 +10,9 @@
 #include <cassert>
 #include <mutex>
 #include <algorithm>
-#include <chrono>
-
-using namespace std::chrono;
 
 #include "figureOutNumThreads.hh"
 #include "CmdLine.hh"
-
-// Get starting timepoint
-auto start = high_resolution_clock::now();
 
 // mutex to make race work correctly
 std::mutex fixCount;
@@ -99,12 +93,3 @@ int main(int argc, char *argv[])
     return run_race(nThreadsTotal-1U, maxCount);
 }
 
-// Get ending timepoint
-auto stop = high_resolution_clock::now();
-
-auto duration = duration_cast<minutes>(stop - start);
- 
-std::cout << "Time taken by 'race': "
-          << duration.count()
-          << " minutes"
-          << endl;

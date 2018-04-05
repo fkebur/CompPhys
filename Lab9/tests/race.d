@@ -147,6 +147,11 @@ race.o: race.cc /usr/include/stdc-predef.h \
  /opt/rh/devtoolset-7/root/usr/include/c++/7/cassert \
  /usr/include/assert.h /opt/rh/devtoolset-7/root/usr/include/c++/7/mutex \
  /opt/rh/devtoolset-7/root/usr/include/c++/7/bits/std_mutex.h \
+ /opt/rh/devtoolset-7/root/usr/include/c++/7/algorithm \
+ /opt/rh/devtoolset-7/root/usr/include/c++/7/bits/stl_algo.h \
+ /opt/rh/devtoolset-7/root/usr/include/c++/7/bits/algorithmfwd.h \
+ /opt/rh/devtoolset-7/root/usr/include/c++/7/bits/stl_heap.h \
+ /opt/rh/devtoolset-7/root/usr/include/c++/7/bits/uniform_int_dist.h \
  ../src/figureOutNumThreads.hh ../src/CmdLine.hh \
  /opt/rh/devtoolset-7/root/usr/include/c++/7/list \
  /opt/rh/devtoolset-7/root/usr/include/c++/7/bits/stl_list.h \

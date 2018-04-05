@@ -111,7 +111,7 @@ int main()
 
     // Do not synchronize threads if people are not friendly
     ThreadBarrier<DimTheLights>* bptr = peopleAreFriends ? &barrier : nullptr;
-
+    
     // Container for the threads
     std::vector<std::thread> threads;
     threads.reserve(nthreads);
